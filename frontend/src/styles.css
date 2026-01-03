@@ -1,0 +1,4 @@
+:root { font-family: system-ui, Arial, sans-serif; }
+button, select, textarea { font: inherit; }
+textarea { padding: 8px; border-radius: 8px; border: 1px solid #ccc; }
+button { padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; }
