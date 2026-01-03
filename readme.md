@@ -29,14 +29,14 @@ docker compose up -d
 ---
 
 ### 3. Uruchomienie backend
-cd backend
-npm install
-npm run migrate
+cd backend__
+npm install__
+npm run migrate__
 npm run dev
 
 ---
 
 ### 4. Uruchomienie frontend
-cd frontend
-npm install
+cd frontend__
+npm install__
 npm run dev
