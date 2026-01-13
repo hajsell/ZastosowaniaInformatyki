@@ -1,0 +1,99 @@
+.header {
+  height: 62px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+  width: 100%;
+}
+
+.header__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__brand {
+  font-size: 22px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #0077ff;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header__auth-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: #444;
+}
+
+.btn--secondary:hover {
+  background-color: #f0f0f0;
+}
+
+.btn--primary {
+  background-color: #0077ff;
+  color: white;
+}
+
+.btn--primary:hover {
+  background-color: #0056b3;
+}
+
+.header__user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+}
+
+.header__user-profile:hover {
+  background-color: #f0f2f5;
+}
+
+.user-avatar {
+  font-size: 18px;
+  background: #e0e0e0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}

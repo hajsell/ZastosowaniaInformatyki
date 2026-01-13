@@ -1,4 +1,53 @@
-:root { font-family: system-ui, Arial, sans-serif; }
-button, select, textarea { font: inherit; }
-textarea { padding: 8px; border-radius: 8px; border: 1px solid #ccc; }
-button { padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; }
+*, *::before, *::after {
+  box-sizing: border-box; 
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+textarea {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  resize: vertical;
+}
+
+button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+  border-color: #bbb;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
