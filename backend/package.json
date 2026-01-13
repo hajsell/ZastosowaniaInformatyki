@@ -2,13 +2,14 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
+"scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "migrate": "node-pg-migrate up -m src/db/migrations",
-    "migrate:down": "node-pg-migrate down -m src/db/migrations",
-    "migrate:create": "node-pg-migrate create -m src/db/migrations"
+    "migrate": "node-pg-migrate -m src/db/migrations",
+    "migrate:up": "npm run migrate -- up",
+    "migrate:down": "npm run migrate -- down",
+    "migrate:create": "npm run migrate -- create"
   },
   "keywords": [],
   "author": "",

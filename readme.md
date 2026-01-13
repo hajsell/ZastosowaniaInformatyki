@@ -31,7 +31,7 @@ docker compose up -d
 ### 3. Uruchomienie backend
 cd backend  
 npm install  
-npm run migrate  
+npm run migrate:up  
 npm run dev
 
 ---
