@@ -37,6 +37,12 @@
   width: 100%;
 }
 
+.layout__full-width {
+  display: block;
+  width: 100%;
+  padding-top: 40px;
+}
+
 .layout__main {
   width: 100%;
   min-width: 0;

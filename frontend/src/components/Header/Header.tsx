@@ -13,24 +13,23 @@ export function Header() {
         </Link>
 
         <nav className="header__nav">
-          {isLoggedIn ? (
+        {isLoggedIn ? (
+        
             <div className="header__user-profile" onClick={() => setIsLoggedIn(false)}>
-              <div className="user-avatar">👤</div>
-              <span className="user-name">Mój profil</span>
+            <div className="user-avatar">👤</div>
+            <span className="user-name">Mój profil</span>
             </div>
-          ) : (
+        ) : (
             <div className="header__auth-buttons">
-              <button 
-                className="btn btn--secondary" 
-                onClick={() => setIsLoggedIn(true)}
-              >
+            <Link to="/login" className="btn btn--secondary">
                 Zaloguj
-              </button>
-              <Link to="/register" className="btn btn--primary">
+            </Link>
+            
+            <Link to="/register" className="btn btn--primary">
                 Zarejestruj się
-              </Link>
+            </Link>
             </div>
-          )}
+        )}
         </nav>
       </div>
     </header>
