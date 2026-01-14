@@ -7,7 +7,7 @@ interface AdCardProps {
   description: string;
   price: number;
   location: string;
-  createdAt: string;
+  created_at: string;
   category: string;
   imageUrl: string;
 }
@@ -18,7 +18,7 @@ const AdCard = ({
   description,
   price,
   location,
-  createdAt,
+  created_at,
   category,
   imageUrl,
 }: AdCardProps) => {
@@ -26,7 +26,7 @@ const AdCard = ({
     ? description.substring(0, 100) + "..." 
     : description;
 
-  const formattedDate = new Date(createdAt).toLocaleDateString("pl-PL", {
+  const formattedDate = new Date(created_at).toLocaleDateString("pl-PL", {
     day: "numeric",
     month: "short",
   });

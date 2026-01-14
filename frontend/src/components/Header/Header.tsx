@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./Header.css";
 
 export function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn] = useState(true);
 
   return (
     <header className="header">
@@ -13,12 +13,16 @@ export function Header() {
         </Link>
 
         <nav className="header__nav">
+          <Link to={isLoggedIn ? "/add-post" : "/login"} className="btn btn--secondary">
+            Dodaj ogłoszenie
+          </Link>
+          
         {isLoggedIn ? (
         
-            <div className="header__user-profile" onClick={() => setIsLoggedIn(false)}>
-            <div className="user-avatar">👤</div>
-            <span className="user-name">Mój profil</span>
-            </div>
+            <Link to="/profile" className="header__user-profile">
+              <div className="user-avatar">👤</div>
+              <span className="user-name">Mój profil</span>
+            </Link>
         ) : (
             <div className="header__auth-buttons">
             <Link to="/login" className="btn btn--secondary">

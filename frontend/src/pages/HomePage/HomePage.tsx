@@ -31,14 +31,13 @@ export function HomePage() {
             description={p.description}
             price={p.price}
             location={p.location}
-            createdAt={p.created_at}
+            created_at={p.created_at}
             category={p.category}
             imageUrl={p.imageUrl}
           />
         ))}
       </div>
 
-      {/* Kontener paginacji */}
       <div className="pagination">
         <button 
           disabled={currentPage === 1}

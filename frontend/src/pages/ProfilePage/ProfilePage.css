@@ -1,0 +1,131 @@
+.profile-container {
+  padding: 40px 0;
+}
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 30px;
+}
+
+.profile-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.profile-avatar-large {
+  font-size: 60px;
+  background: #f0f2f5;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+}
+
+.profile-meta {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.profile-details {
+  text-align: left;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+  margin-bottom: 25px;
+}
+
+.detail-item {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.detail-item span {
+  display: block;
+  color: #666;
+}
+
+.edit-profile-btn {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.logout-btn-link {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-shortcut-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.my-posts-grid {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.profile-post-wrapper {
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-actions {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+.action-btn.edit:hover { background: #e9ecef; }
+.action-btn.delete { color: #dc3545; }
+.action-btn.delete:hover { background: #fdf2f2; }
+
+@media (max-width: 900px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+}
