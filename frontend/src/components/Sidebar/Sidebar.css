@@ -12,6 +12,15 @@
   scrollbar-width: thin;
 }
 
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-button {
+  text-decoration: none;
+}
+
 .sidebar::-webkit-scrollbar {
   width: 4px;
 }

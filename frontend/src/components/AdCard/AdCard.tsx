@@ -4,9 +4,9 @@ import "./AdCard.css";
 interface AdCardProps {
   id: string | number;
   title: string;
-  description: string;
+  content: string;
   price: number;
-  location: string;
+  city: string;
   created_at: string;
   category: string;
   imageUrl: string;
@@ -15,22 +15,22 @@ interface AdCardProps {
 const AdCard = ({
   id,
   title,
-  description,
+  content,
   price,
-  location,
+  city,
   created_at,
   category,
   imageUrl,
 }: AdCardProps) => {
-  const shortDescription = description.length > 100 
-    ? description.substring(0, 100) + "..." 
-    : description;
+  const shortDescription = content.length > 100 
+    ? content.substring(0, 100) + "..." 
+    : content;
 
   const formattedDate = new Date(created_at).toLocaleDateString("pl-PL", {
     day: "numeric",
     month: "short",
   });
-
+  console.log(imageUrl)
   return (
     <div className="ad-card">
       <Link to={`/posts/${id}`} className="ad-card-link">
@@ -48,7 +48,7 @@ const AdCard = ({
           <p className="ad-card-description">{shortDescription}</p>
 
           <div className="ad-card-footer">
-            <span className="ad-card-location">📍 {location}</span>
+            <span className="ad-card-location">📍 {city}</span>
             <span className="ad-card-date">{formattedDate}</span>
           </div>
         </div>

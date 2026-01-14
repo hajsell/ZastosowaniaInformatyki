@@ -1,71 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import * as LucideIcons from "lucide-react";
 import "./Sidebar.css";
 
 interface Category {
   id: string;
   name: string;
+  slug: string;
   icon: string;
-  count?: number;
 }
 
-const CATEGORIES: Category[] = [
-  { id: "all", name: "Wszystkie ogłoszenia", icon: "📋" },
-  { id: "motoryzacja", name: "Motoryzacja", icon: "🚗", count: 124 },
-  { id: "nieruchomosci", name: "Nieruchomości", icon: "🏠", count: 89 },
-  { id: "praca", name: "Praca", icon: "💼", count: 215 },
-  { id: "dom-ogrod", name: "Dom i Ogród", icon: "🌳", count: 56 },
-  { id: "elektronika", name: "Elektronika", icon: "💻", count: 312 },
-];
-
 export function Sidebar() {
-  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [activeSlug, setActiveSlug] = useState<string>("wszystko");
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/posts/categories")
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch((err) => console.error("Błąd kategorii:", err));
+  }, []);
 
   return (
     <aside className="sidebar">
+      <h3 className="sidebar-title">Kategorie</h3>
+      
       <div className="sidebar-search">
         <div className="search-input-wrapper">
-          <span className="search-icon">🔍</span>
-          <input 
-            type="text" 
-            placeholder="Szukaj ogłoszeń..." 
-            className="search-input"
-          />
+          <LucideIcons.Search className="search-icon" size={16} />
+          <input type="text" className="search-input" placeholder="Szukaj kategorii..." />
         </div>
       </div>
 
-      <h3 className="sidebar-title">Kategorie</h3>
-      
-      <nav>
+      <nav className="sidebar__nav">
         <ul className="category-list">
-          {CATEGORIES.map((cat) => (
-            <li key={cat.id}>
-              <button
-                className={`category-button ${activeCategory === cat.id ? "active" : ""}`}
-                onClick={() => setActiveCategory(cat.id)}
-              >
-                <span className="category-info">
-                  <span className="category-icon">{cat.icon}</span>
-                  {cat.name}
-                </span>
-                
-                {cat.count !== undefined && (
-                  <span className="category-count">({cat.count})</span>
-                )}
-              </button>
-            </li>
-          ))}
+          {categories.map((cat) => {
+            const IconName = cat.icon
+              .split('-')
+              .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+              .join('') as keyof typeof LucideIcons;
+
+            const Icon = (LucideIcons[IconName] as LucideIcons.LucideIcon) || LucideIcons.HelpCircle;
+            const isActive = activeSlug === cat.slug;
+
+            return (
+              <li key={cat.id}>
+                <a 
+                  href={`/category/${cat.slug}`} 
+                  className={`category-button ${isActive ? 'active' : ''}`}
+                  onClick={() => setActiveSlug(cat.slug)}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Icon size={20} className="category-icon" />
+                    <span>{cat.name}</span>
+                  </div>
+                  <span className="category-count"></span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </nav>
 
-      <div className="sidebar-divider" />
-
+      <div className="sidebar-divider"></div>
+      
       <div className="extra-filters">
-        <h4>Szybkie filtry</h4>
+        <h4>Filtry dodatkowe</h4>
         <label className="filter-label">
           <input type="checkbox" /> Tylko ze zdjęciem
         </label>
         <label className="filter-label">
-          <input type="checkbox" /> Przesyłka OLX
+          <input type="checkbox" /> Darmowa dostawa
         </label>
       </div>
     </aside>
