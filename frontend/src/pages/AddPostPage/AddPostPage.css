@@ -1,26 +1,30 @@
 .add-post-container {
+  padding: 40px 20px;
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 64px);
 }
 
 .add-post-card {
   background: white;
   padding: 32px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   width: 100%;
-  max-width: 700px; /* Szerszy niż login/register */
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .add-post-card h2 {
-  margin-bottom: 24px;
+  margin: 0 0 10px 0;
   color: #222;
-  text-align: center;
+  font-weight: 800;
 }
 
 .add-post-field {
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -32,13 +36,21 @@
   color: #444;
 }
 
-.add-post-field input, 
-.add-post-field select, 
+.add-post-field input,
+.add-post-field select,
 .add-post-field textarea {
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-post-field input:focus,
+.add-post-field select:focus,
+.add-post-field textarea:focus {
+  border-color: #0077ff;
 }
 
 .add-post-row {
@@ -48,33 +60,96 @@
 }
 
 .file-input {
-  border: 1px dashed #ccc !important;
-  background: #f9f9f9;
-  cursor: pointer;
+  padding: 10px 0 !important;
+  border: none !important;
 }
 
 .file-hint {
   font-size: 12px;
   color: #888;
-  margin-top: -5px;
+  margin-top: -4px;
 }
 
 .add-post-btn {
-  width: 100%;
-  background-color: #28a745; /* Zielony sugeruje dodawanie/sukces */
+  background-color: #0077ff;
   color: white;
   border: none;
-  padding: 14px;
+  padding: 16px;
   border-radius: 8px;
-  font-weight: 700;
   font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.2s;
 }
 
-.add-post-btn:hover {
-  background-color: #218838;
+.add-post-btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.add-post-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.image-management label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.image-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preview-item {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.preview-item button {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0px;
+}
+
+.add-image-btn {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.add-image-btn:hover {
+  border-color: #0077ff;
+  color: #0077ff;
 }
 
 @media (max-width: 600px) {

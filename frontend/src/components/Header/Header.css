@@ -1,19 +1,18 @@
 .header {
-  height: 62px;
+  height: 64px;
   position: sticky;
   top: 0;
   z-index: 1000;
-
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
-  padding: 12px 0;
+  display: flex;
+  align-items: center;
   width: 100%;
-  
 }
 
 .header__container {
   max-width: 1200px;
-  height: 38px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
@@ -26,21 +25,49 @@
   font-weight: 800;
   text-decoration: none;
   color: #0077ff;
+  letter-spacing: -0.5px;
+}
+
+.brand-logo {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.brand-name {
+  background: linear-gradient(90deg, #0077ff, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.header__brand:hover .brand-logo {
+  transform: scale(1.2) rotate(10deg);
+  display: inline-block;
+  transition: transform 0.2s;
 }
 
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
+}
+
+.header__user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .header__auth-buttons {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn {
-  padding: 8px 16px;
+  padding: 10px 18px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
@@ -48,15 +75,27 @@
   text-decoration: none;
   transition: all 0.2s;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn--secondary {
+.btn--link {
   background-color: transparent;
   color: #444;
 }
 
+.btn--link:hover {
+  color: #0077ff;
+}
+
+.btn--secondary {
+  background-color: #f0f7ff;
+  color: #0077ff;
+}
+
 .btn--secondary:hover {
-  background-color: #f0f0f0;
+  background-color: #e0efff;
 }
 
 .btn--primary {
@@ -66,36 +105,70 @@
 
 .btn--primary:hover {
   background-color: #0056b3;
+  box-shadow: 0 4px 12px rgba(0, 119, 255, 0.2);
+}
+
+.btn-logout-icon {
+  background-color: transparent;
+  border: 1px solid #ff4d4f;
+  color: #ff4d4f;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-logout-icon:hover {
+  background-color: #fff1f0;
+  box-shadow: 0 2px 8px rgba(255, 77, 79, 0.1);
 }
 
 .header__user-profile {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 20px;
+  gap: 10px;
+  padding: 4px 12px 4px 4px;
+  border-radius: 25px;
   background-color: #f8f9fa;
-  cursor: pointer;
+  text-decoration: none;
   border: 1px solid #e0e0e0;
+  transition: all 0.2s;
 }
 
 .header__user-profile:hover {
-  background-color: #f0f2f5;
+  border-color: #0077ff;
+  background-color: #ffffff;
 }
 
 .user-avatar {
-  font-size: 18px;
-  background: #e0e0e0;
+  font-size: 16px;
+  background: #e9ecef;
   width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  border: 1px solid #dee2e6;
 }
 
 .user-name {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #333;
+}
+
+.add-btn {
+  border: 1px solid #0077ff;
+}
+
+@media (max-width: 600px) {
+  .user-name {
+    display: none;
+  }
+  .header__brand {
+    font-size: 18px;
+  }
 }

@@ -12,8 +12,8 @@ interface PostDetails {
   category_name: string;
   author_name: string;
   author_email: string;
-  image_path: string;
   author_phone: string;
+  images: string[] | null;
 }
 
 export function PostPage() {
@@ -21,6 +21,7 @@ export function PostPage() {
   const [post, setPost] = useState<PostDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -34,6 +35,9 @@ export function PostPage() {
 
         const data = await response.json();
         setPost(data);
+        if (data.images && data.images.length > 0) {
+          setActiveImage(data.images[0]);
+        }
       } catch (err) {
         console.error(err);
         setError(true);
@@ -63,11 +67,28 @@ export function PostPage() {
       <div className="post-container">
         <div className="post-main">
           <div className="post-gallery">
-            <img 
-              src={`/uploads/${post.image_path}`} 
-              alt={post.title} 
-            />
+            <div className="main-image-wrapper">
+              <img 
+                src={activeImage ? `/uploads/${activeImage}` : '/default-placeholder.png'} 
+                alt={post.title} 
+              />
+            </div>
+            
+            {post.images && post.images.length > 1 && (
+              <div className="thumbnails-grid">
+                {post.images.map((img, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`thumbnail ${activeImage === img ? 'active' : ''}`}
+                    onClick={() => setActiveImage(img)}
+                  >
+                    <img src={`/uploads/${img}`} alt={`${post.title} - ${idx + 1}`} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
           <div className="post-description">
             <h3>Opis</h3>
             <p>{post.content}</p>

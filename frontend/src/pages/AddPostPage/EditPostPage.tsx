@@ -27,7 +27,8 @@ export function AddPostPage() {
   useEffect(() => {
     fetch("/api/posts/categories")
       .then((res) => res.json())
-      .then((data) => setCategories(data));
+      .then((data) => setCategories(data))
+      .catch((err) => console.error("Błąd kategorii:", err));
 
     if (isEditMode) {
       fetch(`/api/posts/${id}`)
@@ -41,7 +42,8 @@ export function AddPostPage() {
             content: data.content || "",
           });
           setExistingImages(data.images || []);
-        });
+        })
+        .catch((err) => console.error("Błąd pobierania ogłoszenia:", err));
     }
   }, [id, isEditMode]);
 
@@ -55,10 +57,19 @@ export function AddPostPage() {
     setNewImages(newImages.filter((_, i) => i !== index));
   };
 
+  const removeExistingImage = (imgName: string) => {
+    setExistingImages(existingImages.filter((img) => img !== imgName));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
 
     const data = new FormData();
     data.append("title", formData.title);
@@ -67,7 +78,9 @@ export function AddPostPage() {
     data.append("city", formData.city);
     data.append("content", formData.content);
     
-    data.append("existingImages", JSON.stringify(existingImages));
+    if (isEditMode) {
+      data.append("existingImages", JSON.stringify(existingImages));
+    }
 
     newImages.forEach((file) => {
       data.append("images", file);
@@ -83,11 +96,8 @@ export function AddPostPage() {
         body: data,
       });
 
-      if (response.ok) {
-        navigate("/profile");
-      } else {
-        alert("Wystąpił błąd podczas zapisywania ogłoszenia.");
-      }
+      if (response.ok) navigate("/profile");
+      else alert(isEditMode ? "Błąd aktualizacji" : "Błąd dodawania");
     } catch (err) {
       console.error(err);
     } finally {
@@ -98,91 +108,95 @@ export function AddPostPage() {
   return (
     <div className="add-post-container">
       <form className="add-post-card" onSubmit={handleSubmit}>
-        <h2>{isEditMode ? "Edytuj ogłoszenie" : "Dodaj ogłoszenie"}</h2>
+        <h2>{isEditMode ? "Edytuj ogłoszenie" : "Dodaj nowe ogłoszenie"}</h2>
 
         <div className="add-post-field">
-          <label>Tytuł</label>
-          <input 
-            type="text" 
-            required 
-            value={formData.title} 
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })} 
+          <label>Tytuł ogłoszenia</label>
+          <input
+            type="text"
+            required
+            disabled={loading}
+            value={formData.title}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
           />
         </div>
 
         <div className="add-post-row">
           <div className="add-post-field">
             <label>Kategoria</label>
-            <select 
-              required 
-              value={formData.category} 
+            <select
+              required
+              disabled={loading}
+              value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
             >
-              <option value="">Wybierz</option>
+              <option value="">Wybierz kategorię</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>{cat.name}</option>
               ))}
             </select>
           </div>
+
           <div className="add-post-field">
             <label>Cena (zł)</label>
-            <input 
-              type="number" 
-              required 
-              value={formData.price} 
-              onChange={(e) => setFormData({ ...formData, price: e.target.value })} 
+            <input
+              type="number"
+              required
+              disabled={loading}
+              value={formData.price}
+              onChange={(e) => setFormData({ ...formData, price: e.target.value })}
             />
           </div>
         </div>
 
         <div className="add-post-field">
           <label>Lokalizacja (Miasto)</label>
-          <input 
-            type="text" 
-            required 
-            value={formData.city} 
-            onChange={(e) => setFormData({ ...formData, city: e.target.value })} 
+          <input
+            type="text"
+            required
+            disabled={loading}
+            value={formData.city}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
           />
         </div>
 
         <div className="add-post-field">
-          <label>Opis</label>
-          <textarea 
-            rows={5} 
-            required 
-            value={formData.content} 
-            onChange={(e) => setFormData({ ...formData, content: e.target.value })} 
-          />
+          <label>Opis ogłoszenia</label>
+          <textarea
+            rows={6}
+            required
+            disabled={loading}
+            value={formData.content}
+            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+          ></textarea>
         </div>
 
-        <div className="image-management">
+        <div className="add-post-field">
           <label>Zdjęcia</label>
-          <div className="image-previews">
-            {existingImages.map((img, idx) => (
-              <div key={`old-${idx}`} className="preview-item">
-                <img src={`/uploads/${img}`} alt="" />
-                <button 
-                  type="button" 
-                  onClick={() => setExistingImages(existingImages.filter(i => i !== img))}
-                >
-                  ×
-                </button>
+          <div className="image-management-grid">
+            {existingImages.map((img) => (
+              <div key={img} className="image-preview-item">
+                <img src={`/uploads/${img}`} alt="Podgląd" />
+                <button type="button" className="remove-img-btn" onClick={() => removeExistingImage(img)}>×</button>
               </div>
             ))}
-            {newImages.map((file, idx) => (
-              <div key={`new-${idx}`} className="preview-item new">
-                <img src={URL.createObjectURL(file)} alt="" />
-                <button type="button" onClick={() => removeNewImage(idx)}>×</button>
+            
+            {newImages.map((file, index) => (
+              <div key={index} className="image-preview-item new-upload">
+                <img src={URL.createObjectURL(file)} alt="Nowe" />
+                <button type="button" className="remove-img-btn" onClick={() => removeNewImage(index)}>×</button>
               </div>
             ))}
-            <label className="add-image-btn">
-              +<input type="file" multiple accept="image/*" onChange={handleFileChange} hidden />
+
+            <label className="image-upload-placeholder">
+              <span>+ Dodaj</span>
+              <input type="file" multiple accept="image/*" onChange={handleFileChange} hidden />
             </label>
           </div>
         </div>
 
         <button type="submit" className="add-post-btn" disabled={loading}>
-          {loading ? "Zapisywanie..." : "Zapisz ogłoszenie"}
+          {loading ? "Przetwarzanie..." : isEditMode ? "Zapisz zmiany" : "Opublikuj ogłoszenie"}
         </button>
       </form>
     </div>

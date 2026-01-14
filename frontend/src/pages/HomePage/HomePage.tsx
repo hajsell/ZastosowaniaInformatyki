@@ -11,7 +11,7 @@ interface Ad {
   city: string;
   created_at: string;
   category_name: string;
-  image_path: string;
+  images: string[] | null;
 }
 
 const ADS_PER_PAGE = 9;
@@ -79,7 +79,7 @@ export function HomePage() {
               city={p.city}
               created_at={p.created_at}
               category={p.category_name}
-              imageUrl={`/uploads/${p.image_path}`}
+              imageUrl={p.images && p.images.length > 0 ? `/uploads/${p.images[0]}` : '/default-placeholder.png'}
             />
           ))
         ) : (
