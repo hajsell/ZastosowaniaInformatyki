@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import AdCard from "../../components/AdCard/AdCard";
 import "./HomePage.css";
 
@@ -18,37 +19,53 @@ const ADS_PER_PAGE = 9;
 export function HomePage() {
   const [ads, setAds] = useState<Ad[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
+  const category = searchParams.get("category");
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/posts")
-      .then((res) => res.json())
-      .then((data) => {
-        setAds(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Błąd pobierania ogłoszeń:", err);
-        setLoading(false);
-      });
-  }, []);
+    const fetchAds = async () => {
+      try {
+        setLoading(true); 
+        
+        const url = category 
+          ? `/api/posts?category=${category}`
+          : "/api/posts";
 
-  const totalPosts = ads?.length || 0; 
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        setAds(data);
+        setCurrentPage(1);
+      } catch (err) {
+        console.error("Błąd pobierania:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAds();
+  }, [category]);
+
+  const totalPosts = ads?.length || 0;
   const totalPages = Math.ceil(totalPosts / ADS_PER_PAGE);
-  const indexOfLastPost = currentPage * ADS_PER_PAGE;
-  const indexOfFirstPost = indexOfLastPost - ADS_PER_PAGE;
-  const currentPosts = ads.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = ads.slice(
+    (currentPage - 1) * ADS_PER_PAGE,
+    currentPage * ADS_PER_PAGE
+  );
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (loading) return <div className="loader">Ładowanie ogłoszeń...</div>;
 
   return (
     <section className="home-page">
-      <h2 className="home-page__title">Najnowsze ogłoszenia</h2>
+      <h2 className="home-page__title">
+        {category ? `Ogłoszenia: ${category}` : "Najnowsze ogłoszenia"}
+      </h2>
       
       <div className="posts-list">
         {currentPosts.length > 0 ? (
@@ -62,11 +79,11 @@ export function HomePage() {
               city={p.city}
               created_at={p.created_at}
               category={p.category_name}
-              imageUrl={`http://localhost:4000/uploads/${p.image_path}`}
+              imageUrl={`/uploads/${p.image_path}`}
             />
           ))
         ) : (
-          <p>Brak ogłoszeń do wyświetlenia.</p>
+          <p className="no-results">Brak ogłoszeń w tej kategorii.</p>
         )}
       </div>
 
@@ -80,15 +97,17 @@ export function HomePage() {
             Poprzednia
           </button>
 
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
-            <button
-              key={num}
-              onClick={() => handlePageChange(num)}
-              className={`pagination__num ${currentPage === num ? "active" : ""}`}
-            >
-              {num}
-            </button>
-          ))}
+          <div className="pagination__numbers">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+              <button
+                key={num}
+                onClick={() => handlePageChange(num)}
+                className={`pagination__num ${currentPage === num ? "active" : ""}`}
+              >
+                {num}
+              </button>
+            ))}
+          </div>
 
           <button 
             disabled={currentPage === totalPages}

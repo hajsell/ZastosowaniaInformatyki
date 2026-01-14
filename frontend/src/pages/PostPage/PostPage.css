@@ -104,9 +104,64 @@
   align-items: center;
   justify-content: center;
 }
+.contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.contact-btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.contact-btn.message {
+  background-color: #002f34;
+  color: white;
+  border: none;
+}
+
+.contact-btn.message:hover {
+  background-color: #00454c;
+  transform: translateY(-2px);
+}
+
+.contact-btn.phone {
+  background-color: white;
+  color: #002f34;
+  border: 2px solid #002f34;
+  padding: 13px;
+}
+
+@media (min-width: 901px) {
+  .contact-btn.phone:hover {
+    background-color: #002f34;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 47, 52, 0.15);
+  }
+}
 
 @media (max-width: 900px) {
   .post-container {
     grid-template-columns: 1fr;
+  }
+
+  .contact-btn.phone {
+    background-color: #f2f4f5;
+  }
+
+  .contact-btn:active {
+    transform: scale(0.98);
   }
 }

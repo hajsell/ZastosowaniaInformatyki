@@ -64,3 +64,14 @@
   color: #0077ff;
   font-weight: 600;
 }
+
+.auth-error {
+  background-color: #fee2e2;
+  color: #dc2626;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #fecaca;
+}
